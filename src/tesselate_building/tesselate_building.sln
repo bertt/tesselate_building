@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29521.150
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tesselate_building", "tesselate_building\tesselate_building.csproj", "{B9B5E01A-7DAD-4237-B529-2B37B909716C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestProject1", "..\tesselate_building_tests\NUnitTestProject1\NUnitTestProject1.csproj", "{EE365B36-0251-4A53-9935-AF70989A2A9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tesselate_building_tests", "..\tesselate_building_tests\NUnitTestProject1\tesselate_building_tests.csproj", "{EE365B36-0251-4A53-9935-AF70989A2A9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

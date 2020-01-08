@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Wkx" Version="0.5.1" />
+  </ItemGroup>
+
 </Project>
