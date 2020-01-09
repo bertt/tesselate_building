@@ -82,10 +82,15 @@ namespace tesselate_building
             for(var i = 0; i < trianglesIndices.Count / 3; i++)
             {
                 var t = new Polygon();
-                t.ExteriorRing.Points.Add(GetPoint(data, i, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, i+1, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, i + 2, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, i, height));
+
+                var a = trianglesIndices[i*3];
+                var b = trianglesIndices[i*3+1];
+                var c = trianglesIndices[i*3 +2];
+
+                t.ExteriorRing.Points.Add(GetPoint(data, a, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, b, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, c, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, a, height));
 
                 polygons.Add(t);
             }
@@ -94,8 +99,8 @@ namespace tesselate_building
 
         private static Point GetPoint(List<double> data, int index, double height)
         {
-            var x = data[index];
-            var y = data[index + 1];
+            var x = data[index*2];
+            var y = data[index*2 + 1];
             var p = new Point(x, y, height);
             return p;
         }

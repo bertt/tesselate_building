@@ -20,23 +20,25 @@ namespace tesselate_building_sample_console
             SqlMapper.AddTypeHandler(new GeometryTypeHandler());
             conn.Open();
 
-            var buildings = conn.Query<Building>("select ST_AsBinary(wkb_geometry) as geometry, height, ogc_fid as id from delaware_buildings");
+            var buildings = conn.Query<Building>("select ST_AsBinary(geom_4978) as geometry, height, ogc_fid as id from delaware_buildings");
 
             var i = 0;
             foreach (var building in buildings)
             {
                 var polygon = (Polygon)building.Geometry;
+                var wktFootprint = polygon.SerializeString<WktSerializer>();
                 var height = building.Height;
                 var points = polygon.ExteriorRing.Points;
 
                 var polyhedralsurface = TesselateBuilding.MakePolyHedral(polygon, height);
                 var wkt = polyhedralsurface.SerializeString<WktSerializer>();
-                var updateSql = $"update delaware_buildings set geom = ST_GeomFromText('{wkt}') where ogc_fid={building.Id}";
+                var updateSql = $"update delaware_buildings set geom_4978_triangle = ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 4978)) where ogc_fid={building.Id}";
                 conn.Execute(updateSql);
                 var perc = Math.Round((double)i / buildings.AsList().Count * 100, 2);
                 Console.Write($"\rProgress: {perc.ToString("F")}%");
                 i++;
             }
+
             conn.Close();
 
             stopWatch.Stop();
