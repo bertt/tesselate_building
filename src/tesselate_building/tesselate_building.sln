@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{5AF4850E-A10
 		..\..\README.md = ..\..\README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{4D533FD0-70E8-4ED9-A943-243CF7A70F28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tesselate_building_sample_console", "tesselate_building_sample_console\tesselate_building_sample_console.csproj", "{FB2A1123-778F-468F-BD2E-A0FE236EDA62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +30,16 @@ Global
 		{EE365B36-0251-4A53-9935-AF70989A2A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE365B36-0251-4A53-9935-AF70989A2A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE365B36-0251-4A53-9935-AF70989A2A9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB2A1123-778F-468F-BD2E-A0FE236EDA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB2A1123-778F-468F-BD2E-A0FE236EDA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB2A1123-778F-468F-BD2E-A0FE236EDA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB2A1123-778F-468F-BD2E-A0FE236EDA62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FB2A1123-778F-468F-BD2E-A0FE236EDA62} = {4D533FD0-70E8-4ED9-A943-243CF7A70F28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB06FD6F-F465-489B-B6A6-FBA1D6F23975}

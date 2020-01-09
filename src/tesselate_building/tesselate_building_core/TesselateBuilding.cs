@@ -45,6 +45,8 @@ namespace tesselate_building
                 t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, 0));
                 t1.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, 0));
                 t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, height));
+                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, 0));
+
 
                 polygons.Add(t1);
 
@@ -52,6 +54,7 @@ namespace tesselate_building
                 t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, height));
                 t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, height));
                 t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, 0));
+                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, height));
 
                 polygons.Add(t2);
             }
@@ -82,7 +85,9 @@ namespace tesselate_building
                 t.ExteriorRing.Points.Add(GetPoint(data, i, height));
                 t.ExteriorRing.Points.Add(GetPoint(data, i+1, height));
                 t.ExteriorRing.Points.Add(GetPoint(data, i + 2, height));
-               polygons.Add(t);
+                t.ExteriorRing.Points.Add(GetPoint(data, i, height));
+
+                polygons.Add(t);
             }
             return polygons;
         }
