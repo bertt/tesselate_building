@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\tesselate_building\tesselate_building\tesselate_building.csproj" />
+    <ProjectReference Include="..\tesselate_building_core\tesselate_building_core.csproj" />
   </ItemGroup>
 
 </Project>
