@@ -30,12 +30,10 @@ namespace tesselate_building_sample_console
                 var points = polygon.ExteriorRing.Points;
 
                 var polyhedralsurface = TesselateBuilding.MakePolyHedral(polygon, height);
-
-                // todo: store in database
                 var wkt = polyhedralsurface.SerializeString<WktSerializer>();
                 var updateSql = $"update delaware_buildings set geom = ST_GeomFromText('{wkt}') where ogc_fid={building.Id}";
                 conn.Execute(updateSql);
-                var perc = Math.Round(((double)i / buildings.AsList().Count) * 100, 2);
+                var perc = Math.Round((double)i / buildings.AsList().Count * 100, 2);
                 Console.Write($"\rProgress: {perc.ToString("F")}%");
                 i++;
             }
