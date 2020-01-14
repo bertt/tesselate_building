@@ -42,19 +42,19 @@ namespace tesselate_building
                 var p1 = footprint.ExteriorRing.Points[i];
 
                 var t1 = new Polygon();
-                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, 0));
-                t1.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, 0));
-                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, height));
-                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, 0));
+                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, p0.Z));
+                t1.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, p1.Z));
+                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, p0.Z + height));
+                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, p0.Z));
 
 
                 polygons.Add(t1);
 
                 var t2 = new Polygon();
-                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, height));
-                t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, height));
-                t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, 0));
-                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, height));
+                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, p0.Z + height));
+                t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, p1.Z + height));
+                t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, p1.Z));
+                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, p0.Z + height));
 
                 polygons.Add(t2);
             }
@@ -65,6 +65,7 @@ namespace tesselate_building
         public static List<Polygon> Tesselate(Polygon footprint, double height)
         {
             var points = footprint.ExteriorRing.Points;
+            var z = footprint.ExteriorRing.Points[0].Z;
 
             var data = new List<double>();
             var holeIndices = new List<int>();
@@ -87,21 +88,21 @@ namespace tesselate_building
                 var b = trianglesIndices[i*3+1];
                 var c = trianglesIndices[i*3 +2];
 
-                t.ExteriorRing.Points.Add(GetPoint(data, a, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, b, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, c, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, a, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, a, z, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, b, z, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, c, z, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, a, z, height));
 
                 polygons.Add(t);
             }
             return polygons;
         }
 
-        private static Point GetPoint(List<double> data, int index, double height)
+        private static Point GetPoint(List<double> data, int index, double? z, double height)
         {
             var x = data[index*2];
             var y = data[index*2 + 1];
-            var p = new Point(x, y, height);
+            var p = new Point(x, y, z+ height);
             return p;
         }
     }
