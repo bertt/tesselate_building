@@ -15,7 +15,7 @@ namespace tesselate_building_sample_console
         static void Main(string[] args)
         {
             var version = Assembly.GetEntryAssembly().GetName().Version;
-            Console.WriteLine("Tool: Tesselate buildings {version}");
+            Console.WriteLine($"Tool: Tesselate buildings {version}");
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
@@ -42,7 +42,7 @@ namespace tesselate_building_sample_console
 
                 var buildings = conn.Query<Building>($"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height, {o.IdColumn} as id from {o.Table}");
 
-                var i = 0;
+                var i = 1;
                 foreach (var building in buildings)
                 {
                     var polygon = (Polygon)building.Geometry;

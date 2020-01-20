@@ -18,3 +18,16 @@ Assert.IsTrue(wkt == "POLYHEDRALSURFACE(((-75.55478134 39.1632752950001 0,-75.55
 ## Sample application
 
 Sample application see 'tesselate_building_sample_console', reads footprint polygons/heights from PostGIS database and writes polysurfacehedral geometries.
+
+Run sample app in Docker:
+
+```
+$ docker run -it bertt/tesselate_building .
+```
+
+Build sample application in Docker:
+
+```
+$ docker build -t bertt/tesselate_building .
+```
+
