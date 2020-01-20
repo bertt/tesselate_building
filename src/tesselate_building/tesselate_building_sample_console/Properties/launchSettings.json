@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "tesselate_building_sample_console": {
+      "commandName": "Project",
+      "commandLineArgs": "-U postgres -h leda -d research -t bro.geotop3d"
+    }
+  }
+}
