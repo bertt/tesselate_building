@@ -3,7 +3,9 @@ using Dapper;
 using Npgsql;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using tesselate_building;
 using Wkx;
 
@@ -40,7 +42,11 @@ namespace tesselate_building_sample_console
                 SqlMapper.AddTypeHandler(new GeometryTypeHandler());
                 conn.Open();
 
-                var buildings = conn.Query<Building>($"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height, {o.IdColumn} as id from {o.Table}");
+
+                var select = $"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height, style, {o.IdColumn} as id";
+                var sql = $"{select} from {o.Table}";
+
+                var buildings = conn.Query<Building>(sql);
 
                 var i = 1;
                 foreach (var building in buildings)
@@ -50,9 +56,12 @@ namespace tesselate_building_sample_console
                     var height = building.Height;
                     var points = polygon.ExteriorRing.Points;
 
-                    var polyhedralsurface = TesselateBuilding.MakePolyHedral(polygon, height);
-                    var wkt = polyhedralsurface.SerializeString<WktSerializer>();
-                    var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 3857)) where {o.IdColumn}={building.Id}";
+                    var res = TesselateBuilding.MakePolyHedral(polygon, height, building.BuildingStyle);
+                    var wkt = res.polyhedral.SerializeString<WktSerializer>();
+
+                    var colors = "{"+ string.Join(',', res.colors) +"}";
+                    var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 3857)) " +
+                    $", {o.ColorsColumn} = '{colors}' where {o.IdColumn}={building.Id}";
                     conn.Execute(updateSql);
                     var perc = Math.Round((double)i / buildings.AsList().Count * 100, 2);
                     Console.Write($"\rProgress: {perc.ToString("F")}%");

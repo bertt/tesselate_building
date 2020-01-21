@@ -21,9 +21,11 @@ namespace NUnitTestProject1
         [Test]
         public void MakePolyHedralTest()
         {
-            var polyhedral = TesselateBuilding.MakePolyHedral(footprint, height);
-            var wkt = polyhedral.SerializeString<WktSerializer>();
+            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
+            var res = TesselateBuilding.MakePolyHedral(footprint, height, bs);
+            var wkt = res.polyhedral.SerializeString<WktSerializer>();
             Assert.IsTrue(wkt!=null);
+            
         }
 
         [Test]
@@ -32,15 +34,19 @@ namespace NUnitTestProject1
             var wktFootprint = "POLYGON((-75.554412769 39.1634003080001, -75.554480102 39.163362636, -75.554508552 39.1633934610001, -75.554552455 39.163368898, -75.554609356 39.1634305470001, -75.554505101 39.163488876, -75.554412769 39.1634003080001))";
             footprint = (Polygon)Geometry.Deserialize<WktSerializer>(wktFootprint);
             var height = 9.92000000000;
-            var polyhedral_actual = TesselateBuilding.MakePolyHedral(footprint, height);
-            Assert.IsTrue(polyhedral_actual.Geometries.Count == 20);
+            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
+
+            var res = TesselateBuilding.MakePolyHedral(footprint, height, bs);
+            Assert.IsTrue(res.polyhedral.Geometries.Count == 20);
+            Assert.IsTrue(res.colors.Count == 20);
         }
 
         [Test]
         public void TriangulateBuildingTest()
         {
-            var triangles = TesselateBuilding.MakeBuilding(footprint, height);
-            Assert.IsTrue(triangles.Count == 7 * 2 + (footprint.ExteriorRing.Points.Count - 1) * 2);
+            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
+            var res = TesselateBuilding.MakeBuilding(footprint, height, bs);
+            Assert.IsTrue(res.polygons.Count == 7 * 2 + (footprint.ExteriorRing.Points.Count - 1) * 2);
         }
 
         [Test]

@@ -29,5 +29,10 @@ namespace tesselate_building_sample_console
 
         [Option("idcolumn", Required = false, Default = "id", HelpText = "Id column")]
         public string IdColumn { get; set; }
+
+        [Option("stylecolumn", Required = false, Default = "style", HelpText = "Style column")]
+        public string StyleColumn { get; set; }
+        [Option("colorscolumn", Required = false, Default = "colors", HelpText = "colors column")]
+        public string ColorsColumn { get; set; }
     }
 }

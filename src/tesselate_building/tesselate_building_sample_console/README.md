@@ -29,9 +29,13 @@ If --username and/or --dbname are not specified the current username is used as 
 
   -o, --outputgeometrycolumn    (Default: geom3d) Output geometry column
 
-  --heightcolumn                (Default: height) height column
+  --heightcolumn                (Default: height) height columndocker run -v $(pwd)/output:/app/output -it --network mynetwork geodan/pg2b3dm -h some-postgis -U postgres -c geom_triangle_3857 -t delaware_buildings -d postgres -i id
 
   --idcolumn                    (Default: id) Id column
+
+  --stylecolumn                 (Default: style) Style column
+
+  --colorscolumn                (Default: colors) Colors column 
 
   --help                        Display this help screen.
 

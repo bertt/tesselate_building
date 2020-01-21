@@ -1,37 +1,48 @@
 ﻿using EarcutNet;
 using System.Collections.Generic;
+using System.Linq;
 using Wkx;
 
 namespace tesselate_building
 {
     public static class TesselateBuilding
     {
-        public static PolyhedralSurface MakePolyHedral(Polygon footprint, double height)
+        public static (PolyhedralSurface polyhedral, List<string> colors) MakePolyHedral(Polygon footprint, double height, BuildingStyle buildingStyle)
         {
             var polyhedral = new PolyhedralSurface();
             
-            var polygons = MakeBuilding(footprint, height);
-            foreach(var t in polygons)
+            var res = MakeBuilding(footprint, height, buildingStyle);
+            foreach(var t in res.polygons)
             {
                 polyhedral.Geometries.Add(t);
             }
 
-            return polyhedral;
+            return (polyhedral, res.colors);
         }
 
-        public static List<Polygon> MakeBuilding(Polygon footprint, double height)
+        public static (List<Polygon> polygons, List<string> colors) MakeBuilding(Polygon footprint, double height, BuildingStyle buildingStyle)
         {
             var result = new List<Polygon>();
+            var colors = new List<string>();
+
             var walls = MakeWalls(footprint, height);
             var floor = Tesselate(footprint, 0);
             var roof = Tesselate(footprint, height);
 
+            colors.AddRange(GetColors(floor, buildingStyle.FloorColor));
+            colors.AddRange(GetColors(roof, buildingStyle.RoofColor));
+            colors.AddRange(GetColors(walls, buildingStyle.WallsColor));
+
             result.AddRange(floor);
             result.AddRange(roof);
             result.AddRange(walls);
-            return result;
+            return (result, colors);
         }
 
+        private static List<string> GetColors(List<Polygon> polygons, string Color )
+        {
+            return Enumerable.Repeat(Color, polygons.Count).ToList();
+        }
 
         public static List<Polygon> MakeWalls(Polygon footprint, double height)
         {
