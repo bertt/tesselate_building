@@ -1,4 +1,5 @@
 ﻿using EarcutNet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Wkx;
@@ -89,7 +90,6 @@ namespace tesselate_building_core
         public static List<Polygon> Tesselate(Polygon footprint, double height)
         {
             var points = footprint.ExteriorRing.Points;
-            var z = footprint.ExteriorRing.Points[0].Z;
 
             var data = new List<double>();
             var holeIndices = new List<int>();
@@ -112,21 +112,21 @@ namespace tesselate_building_core
                 var b = trianglesIndices[i*3+1];
                 var c = trianglesIndices[i*3 +2];
 
-                t.ExteriorRing.Points.Add(GetPoint(data, a, z, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, b, z, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, c, z, height));
-                t.ExteriorRing.Points.Add(GetPoint(data, a, z, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, a, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, b, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, c, height));
+                t.ExteriorRing.Points.Add(GetPoint(data, a, height));
 
                 polygons.Add(t);
             }
             return polygons;
         }
 
-        private static Point GetPoint(List<double> data, int index, double? z, double height)
+        private static Point GetPoint(List<double> data, int index, double height)
         {
             var x = data[index*2];
             var y = data[index*2 + 1];
-            var p = new Point(x, y, z+ height);
+            var p = new Point(x, y, height);
             return p;
         }
     }

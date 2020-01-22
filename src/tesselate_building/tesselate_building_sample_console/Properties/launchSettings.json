@@ -2,7 +2,7 @@
   "profiles": {
     "tesselate_building_sample_console": {
       "commandName": "Project",
-      "commandLineArgs": "-U postgres -d postgres -t delaware_buildings -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors"
+      "commandLineArgs": "-h localhost -U postgres -d postgres -t delaware_buildings -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors"
     }
   }
 }
