@@ -19,14 +19,57 @@ Assert.IsTrue(wkt == "POLYHEDRALSURFACE(((-75.55478134 39.1632752950001 0,-75.55
 Assert.IsTrue(res.colors.Count == 20);
 ```
 
-## Sample application
+## Building Styling
 
-Sample application see 'tesselate_building_sample_console', reads footprint polygons/heights from PostGIS database and writes polysurfacehedral geometries.
+For building styling a json column is used.
 
-Run sample app in Docker:
+Simple content (without storeys):
 
 ```
-$ docker run -it bertt/tesselate_building .
+{
+  "walls": "#00ff00",
+  "roof": " #ff0000",
+  "floor": "#D3D3D3",
+}
+```
+
+Style content with storeys:
+
+```
+{
+  "walls": "#00ff00",
+  "roof": " #ff0000",
+  "floor": "#D3D3D3",
+  "storeys": [
+    {
+      "from": 0,
+      "to": 0.5,
+      "color": "#D3D3D3"
+    },
+    {
+      "from": 0.5,
+      "to": 1,
+      "color": "#D3SS3D3"
+    },
+    {
+      "from": 1,
+      "to": 1.5,
+      "color": "#D354S3D3"
+    }
+  ]
+}
+```
+
+## Sample application
+
+For application see 'tesselate_building_sample_console', reads footprint polygons/heights from PostGIS database and writes polysurfacehedral geometries.
+
+## Docker 
+
+Run app in Docker:
+
+```
+$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
 ```
 
 Build sample application in Docker:
@@ -34,4 +77,3 @@ Build sample application in Docker:
 ```
 $ docker build -t bertt/tesselate_building .
 ```
-

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Wkx;
 
-namespace tesselate_building
+namespace tesselate_building_core
 {
     public static class TesselateBuilding
     {

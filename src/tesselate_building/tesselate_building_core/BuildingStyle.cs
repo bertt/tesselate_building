@@ -1,7 +1,7 @@
 ﻿
 using System.Text.Json.Serialization;
 
-namespace tesselate_building
+namespace tesselate_building_core
 {
     public class BuildingStyle
     {
@@ -11,5 +11,9 @@ namespace tesselate_building
         public string RoofColor { get; set; }
         [JsonPropertyName("floor")]
         public string FloorColor { get; set; }
+
+        [JsonPropertyName("storeys")]
+        public Storey[] Storeys { get; set; }
+
     }
 }

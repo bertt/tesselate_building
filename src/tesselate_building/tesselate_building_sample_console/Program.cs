@@ -3,10 +3,8 @@ using Dapper;
 using Npgsql;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text.Json;
-using tesselate_building;
+using tesselate_building_core;
 using Wkx;
 
 namespace tesselate_building_sample_console

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Wkx;
 
-namespace tesselate_building
+namespace tesselate_building_core
 {
     public class Building
     {
@@ -10,7 +10,7 @@ namespace tesselate_building
 
         public int Id { get; set; }
 
-        public string Style { get; set; }
+        public string Style { get; set; } 
 
         public BuildingStyle BuildingStyle
         {

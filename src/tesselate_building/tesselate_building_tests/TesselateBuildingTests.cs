@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using tesselate_building;
+using tesselate_building_core;
 using Wkx;
 
 namespace NUnitTestProject1
