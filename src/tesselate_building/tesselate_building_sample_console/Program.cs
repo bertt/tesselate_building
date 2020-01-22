@@ -19,7 +19,6 @@ namespace tesselate_building_sample_console
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
-
             Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
             {
                 o.User = string.IsNullOrEmpty(o.User) ? Environment.UserName : o.User;
@@ -54,7 +53,8 @@ namespace tesselate_building_sample_console
                     var height = building.Height;
                     var points = polygon.ExteriorRing.Points;
 
-                    var res = TesselateBuilding.MakePolyHedral(polygon, height, building.BuildingStyle);
+                    var buildingZ = 0; //put everything on the ground
+                    var res = TesselateBuilding.MakePolyHedral(polygon, buildingZ, height, building.BuildingStyle);
                     var wkt = res.polyhedral.SerializeString<WktSerializer>();
 
                     var colors = "{"+ string.Join(',', res.colors) +"}";

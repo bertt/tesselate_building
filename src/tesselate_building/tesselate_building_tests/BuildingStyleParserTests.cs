@@ -35,7 +35,7 @@ namespace tesselate_building_tests
 
             // assert
             Assert.IsTrue(buildingStyle.WallsColor == "#00ff00");
-            Assert.IsTrue(buildingStyle.Storeys.Length==3);
+            Assert.IsTrue(buildingStyle.Storeys.Count==3);
             Assert.IsTrue(buildingStyle.Storeys[0].From== 0);
             Assert.IsTrue(buildingStyle.Storeys[0].To == 0.5);
             Assert.IsTrue(buildingStyle.Storeys[0].Color == "#D3D3D3");

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using tesselate_building_core;
 using Wkx;
 
@@ -22,7 +23,7 @@ namespace NUnitTestProject1
         public void MakePolyHedralTest()
         {
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-            var res = TesselateBuilding.MakePolyHedral(footprint, height, bs);
+            var res = TesselateBuilding.MakePolyHedral(footprint, 0, height, bs);
             var wkt = res.polyhedral.SerializeString<WktSerializer>();
             Assert.IsTrue(wkt!=null);
             
@@ -36,17 +37,38 @@ namespace NUnitTestProject1
             var height = 9.92000000000;
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
 
-            var res = TesselateBuilding.MakePolyHedral(footprint, height, bs);
+            var res = TesselateBuilding.MakePolyHedral(footprint, 0, height, bs);
             Assert.IsTrue(res.polyhedral.Geometries.Count == 20);
             Assert.IsTrue(res.colors.Count == 20);
+        }
+
+        [Test]
+        public void MakeBuildingWithStoreysTest()
+        {
+            // arrange
+            var buildingHeight = 10;
+            var storeys = new List<Storey>();
+            storeys.Add(new Storey() { From = 0, To = 5, Color = "#ff0000" });
+            storeys.Add(new Storey() { From = 5, To = 10, Color = "#D3D3D3" });
+
+            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
+            bs.Storeys = storeys;
+            
+            // act
+            var res = TesselateBuilding.MakeBuilding(footprint, 0, buildingHeight, bs);
+
+            // assert
+            var footprintTriangles = TesselateBuilding.Tesselate(footprint, height).Count;
+            Assert.IsTrue(res.polygons.Count == footprintTriangles * 2 + (footprint.ExteriorRing.Points.Count - 1) * 2 * storeys.Count);
         }
 
         [Test]
         public void TriangulateBuildingTest()
         {
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-            var res = TesselateBuilding.MakeBuilding(footprint, height, bs);
-            Assert.IsTrue(res.polygons.Count == 7 * 2 + (footprint.ExteriorRing.Points.Count - 1) * 2);
+            var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
+            var footprintTriangles = TesselateBuilding.Tesselate(footprint, height).Count;
+            Assert.IsTrue(res.polygons.Count == footprintTriangles * 2 + (footprint.ExteriorRing.Points.Count - 1) * 2);
         }
 
         [Test]
@@ -59,7 +81,7 @@ namespace NUnitTestProject1
         [Test]
         public void MakeWallsTest()
         {
-            var walls = TesselateBuilding.MakeWalls(footprint, height);
+            var walls = TesselateBuilding.MakeWalls(footprint, 0, height);
             Assert.IsTrue(walls.Count == (footprint.ExteriorRing.Points.Count-1)*2);
         }
     }
