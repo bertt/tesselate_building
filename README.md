@@ -1,27 +1,53 @@
 # tesselate_building
 
-Library for creating a LOD1.2 triangulated polyhedralsurface from (building) footprint and height value. Colors per triangle are written to the 'colors' column.
+Console tool for creating a LOD1.2 triangulated polyhedralsurface from (building) footprint and height value. Colors per triangle are written to the 'colors' column. Buildings can have multiple storeys.
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm)
 
-## Sample code
+## Running
 
-```csharp
-wktFootprint = "POLYGON((-75.55478134 39.1632752950001,-75.55477116 39.163235817,-75.554760981 39.1631963390001,-75.554818218 39.163187394,-75.5548754549999 39.16317845,-75.5548856349999 39.1632179280001,-75.554896589 39.1632604100001,-75.554724403 39.163285407,-75.554724102 39.1632842400001,-75.55478134 39.1632752950001))";
-footprint = (Polygon)Geometry.Deserialize<WktSerializer>(wktFootprint);
-height = 11.55;
-
-var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-var res = TesselateBuilding.MakePolyHedral(footprint, height, bs);
-
-var wkt = res.polyhedral.SerializeString<WktSerializer>();
-Assert.IsTrue(wkt == "POLYHEDRALSURFACE(((-75.55478134 39.1632752950001 0,-75.554724102 39.1632842400001 0,-75.554724403 39.163285407 0,-75.55478134 39.1632752950001 0)) ... ((-75.554724102 39.1632842400001 11.55,-75.55478134 39.1632752950001 11.55,-75.55478134 39.1632752950001 0,-75.554724102 39.1632842400001 11.55)))");
-Assert.IsTrue(res.colors.Count == 20);
 ```
+$ tesselate_building -U postgres -h leda -d research -t bro.geotop3d
+```
+
+## command line options
+
+All parameters are optional, except the -t --table option.
+
+If --username and/or --dbname are not specified the current username is used as default.
+
+```
+ -U, --username                Database user
+
+  -h, --host                    (Default: localhost) Database host
+
+  -d, --dbname                  Database name
+
+  -p, --port                    (Default: 5432) Database port
+
+  -t, --table                   Required. Database table, include database schema if needed
+
+  -i, --inputgeometrycolumn     (Default: geom) Input geometry column
+
+  -o, --outputgeometrycolumn    (Default: geom3d) Output geometry column
+
+  --heightcolumn                (Default: height) height columndocker run -v $(pwd)/output:/app/output -it --network mynetwork geodan/pg2b3dm -h some-postgis -U postgres -c geom_triangle_3857 -t delaware_buildings -d postgres -i id
+
+  --idcolumn                    (Default: id) Id column
+
+  --stylecolumn                 (Default: style) Style column
+
+  --colorscolumn                (Default: colors) Colors column 
+
+  --help                        Display this help screen.
+
+  --version                     Display version information.
+  ```
+
 
 ## Building Styling
 
-For building styling a json column is used.
+For building styling a json column is used. Please note the the json keys are case sensitive. 
 
 Simple content (without storeys):
 
@@ -59,10 +85,6 @@ Style content with storeys:
   ]
 }
 ```
-
-## Sample application
-
-For application see 'tesselate_building_sample_console', reads footprint polygons/heights from PostGIS database and writes polysurfacehedral geometries.
 
 ## Docker 
 
