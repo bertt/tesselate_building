@@ -14,6 +14,12 @@ Parts can be made invisible by using transparent colors.
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm)
 
+## Sample
+
+Visualizing subsurface layers in MapBox GL. Floor and roof parts are made transparent.
+
+![2020-02-04](https://user-images.githubusercontent.com/538812/73743253-696d1880-474e-11ea-8c4d-8983d65a1b62.png)
+
 ## Running 
 
 Image on Docker hub: https://hub.docker.com/repository/docker/bertt/tesselate_building
