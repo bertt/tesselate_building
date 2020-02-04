@@ -16,11 +16,11 @@ This tool is designed to create the correct input information for creating 3D ti
 
 ## Samples
 
-Visualizing buildings in Delaware
+Visualizing buildings in Delaware in MapBox GL JS
 
 ![delaware](https://user-images.githubusercontent.com/538812/73743668-6292d580-474f-11ea-9b4f-d64549a3a77b.png)
 
-Visualizing subsurface layers in MapBox GL. Floor and roof parts are made transparent.
+Visualizing subsurface layers in MapBox GL JS. Floor and roof parts are made transparent.
 
 ![2020-02-04](https://user-images.githubusercontent.com/538812/73743253-696d1880-474e-11ea-8c4d-8983d65a1b62.png)
 
