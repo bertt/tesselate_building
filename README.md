@@ -4,10 +4,20 @@ Console tool for creating a LOD1.2 triangulated polyhedralsurface from (building
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm)
 
-## Running
+## Running 
+
+Image on Docker hub: https://hub.docker.com/repository/docker/bertt/tesselate_building
+
+Run app in Docker:
 
 ```
-$ tesselate_building -U postgres -h leda -d research -t bro.geotop3d
+$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
+```
+
+Build sample application in Docker:
+
+```
+$ docker build -t bertt/tesselate_building .
 ```
 
 ## command line options
@@ -84,20 +94,4 @@ Style content with storeys:
     }
   ]
 }
-```
-
-## Docker 
-
-Image on Docker hub: https://hub.docker.com/repository/docker/bertt/tesselate_building
-
-Run app in Docker:
-
-```
-$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
-```
-
-Build sample application in Docker:
-
-```
-$ docker build -t bertt/tesselate_building .
 ```
