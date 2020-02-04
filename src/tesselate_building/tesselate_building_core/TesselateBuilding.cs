@@ -37,7 +37,7 @@ namespace tesselate_building_core
 
             if (buildingStyle.Storeys == null)
             {
-                var walls = MakeWalls(footprint, fromZ, height);
+                var walls = MakeWalls(footprint, fromZ, height-fromZ);
                 colors.AddRange(GetColors(walls, buildingStyle.WallsColor));
                 result.AddRange(walls);
             }
@@ -45,7 +45,7 @@ namespace tesselate_building_core
             {
                 foreach(var storey in buildingStyle.Storeys)
                 {
-                    var walls = MakeWalls(footprint, fromZ + storey.From, fromZ + storey.To);
+                    var walls = MakeWalls(footprint, fromZ + storey.From, storey.To - storey.From);
                     colors.AddRange(GetColors(walls, storey.Color));
                     result.AddRange(walls);
                 }
@@ -59,7 +59,7 @@ namespace tesselate_building_core
             return Enumerable.Repeat(Color, polygons.Count).ToList();
         }
 
-        public static List<Polygon> MakeWalls(Polygon footprint, double fromZ, double height)
+        public static List<Polygon> MakeWalls(Polygon footprint, double fromZ, double storeyheight)
         {
             var polygons = new List<Polygon>();
             for(var i = 1; i < footprint.ExteriorRing.Points.Count; i++)
@@ -70,16 +70,16 @@ namespace tesselate_building_core
                 var t1 = new Polygon();
                 t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ));
                 t1.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, fromZ));
-                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ + height));
+                t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ + storeyheight));
                 t1.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ));
 
                 polygons.Add(t1);
 
                 var t2 = new Polygon();
-                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ + height));
-                t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, fromZ + height));
+                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ + storeyheight));
+                t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, fromZ + storeyheight));
                 t2.ExteriorRing.Points.Add(new Point((double)p1.X, (double)p1.Y, fromZ));
-                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ + height));
+                t2.ExteriorRing.Points.Add(new Point((double)p0.X, (double)p0.Y, fromZ + storeyheight));
 
                 polygons.Add(t2);
             }
