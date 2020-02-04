@@ -14,7 +14,11 @@ Parts can be made invisible by using transparent colors.
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm)
 
-## Sample
+## Samples
+
+Visualizing buildings in Delaware
+
+![delaware](https://user-images.githubusercontent.com/538812/73743668-6292d580-474f-11ea-9b4f-d64549a3a77b.png)
 
 Visualizing subsurface layers in MapBox GL. Floor and roof parts are made transparent.
 
