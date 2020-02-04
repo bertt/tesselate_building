@@ -2,6 +2,16 @@
 
 Console tool for creating a LOD1.2 triangulated polyhedralsurface from (building) footprint and height value. Colors per triangle are written to the 'colors' column. Buildings can have multiple storeys.
 
+The buildings consist of 3 parts:
+
+- Floor: Drawn at z=0, tesselated footprint geometry;
+
+- Roof: Drawn at z=height, tesselated footprint geometry
+
+- Walls: Vertically drawn triangles. As input is used the footprint vertices and from/to values per storey/building  
+
+Parts can be made invisible by using transparent colors.
+
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm)
 
 ## Running 
