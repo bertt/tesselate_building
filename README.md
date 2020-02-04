@@ -30,7 +30,7 @@ Run app in Docker:
 $ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
 ```
 
-Build sample application in Docker:
+Building Docker image:
 
 ```
 $ docker build -t bertt/tesselate_building .
