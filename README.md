@@ -70,6 +70,18 @@ If --username and/or --dbname are not specified the current username is used as 
   --version                     Display version information.
   ```
 
+Expected types of columns:
+
+- idcolumn : type int
+
+- stylecolumn: type json
+
+- geom3d: type geometry
+
+- geom: type geometry
+
+- colors: type string[]
+
 
 ## Building Styling
 
