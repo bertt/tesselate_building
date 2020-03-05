@@ -95,7 +95,7 @@ Image on Docker hub: https://hub.docker.com/repository/docker/bertt/tesselate_bu
 Run app in Docker:
 
 ```
-$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -f mapbox -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
+$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -f mapbox -i geom -o geom_triangle --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
 ```
 
 Build sample application in Docker:
