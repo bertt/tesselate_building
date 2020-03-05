@@ -4,6 +4,9 @@ namespace tesselate_building_sample_console
 {
     public class Options
     {
+        [Option('f', "format", Required = false, Default = "mapbox", HelpText = "Output 'cesium' or 'mapbox'")]
+        public string Format { get; set; }
+
         [Option('U', "username", Required = false, HelpText = "Database user")]
         public string User { get; set; }
 
@@ -12,6 +15,7 @@ namespace tesselate_building_sample_console
 
         [Option('d', "dbname", Required = false, HelpText = "Database name")]
         public string Database { get; set; }
+
         [Option('p', "port", Required = false, Default = "5432", HelpText = "Database port")]
         public string Port { get; set; }
 

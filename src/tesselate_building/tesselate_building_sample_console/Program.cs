@@ -24,6 +24,8 @@ namespace tesselate_building_sample_console
                 o.User = string.IsNullOrEmpty(o.User) ? Environment.UserName : o.User;
                 o.Database = string.IsNullOrEmpty(o.Database) ? Environment.UserName : o.Database;
 
+                var outputProjection = (o.Format == "mapbox" ? 3857 : 4978);
+
                 var connectionString = $"Host={o.Host};Username={o.User};Database={o.Database};Port={o.Port}";
 
                 var istrusted = TrustedConnectionChecker.HasTrustedConnection(connectionString);
@@ -58,7 +60,7 @@ namespace tesselate_building_sample_console
                     var wkt = res.polyhedral.SerializeString<WktSerializer>();
 
                     var colors = "{"+ string.Join(',', res.colors) +"}";
-                    var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 3857)) " +
+                    var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Transform(ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 4326)), {outputProjection}) " +
                     $", {o.ColorsColumn} = '{colors}' where {o.IdColumn}={building.Id}";
                     conn.Execute(updateSql);
                     var perc = Math.Round((double)i / buildings.AsList().Count * 100, 2);

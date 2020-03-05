@@ -31,6 +31,8 @@ If --username and/or --dbname are not specified the current username is used as 
 
   -o, --outputgeometrycolumn    (Default: geom3d) Output geometry column
 
+  -f, --format                  (Default: mapbox) Output format mapbox/cesium
+
   --heightcolumn                (Default: height) height columndocker run -v $(pwd)/output:/app/output -it --network mynetwork geodan/pg2b3dm -h some-postgis -U postgres -c geom_triangle_3857 -t delaware_buildings -d postgres -i id
 
   --idcolumn                    (Default: id) Id column
@@ -93,7 +95,7 @@ Image on Docker hub: https://hub.docker.com/repository/docker/bertt/tesselate_bu
 Run app in Docker:
 
 ```
-$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
+$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -f mapbox -i geom_3857 -o geom_triangle_3857 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
 ```
 
 Build sample application in Docker:

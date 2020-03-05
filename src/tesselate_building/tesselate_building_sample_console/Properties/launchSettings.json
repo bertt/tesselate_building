@@ -2,7 +2,7 @@
   "profiles": {
     "tesselate_building_sample_console": {
       "commandName": "Project",
-      "commandLineArgs": "-h leda -U postgres -d research -t bro.geotop_json -i geom -o geom3d --idcolumn rid --stylecolumn style --colorscolumn color"
+      "commandLineArgs": " -h localhost -U postgres -d postgres -t delaware_buildings -i wkb_geometry -o geom_triangle_4978 --idcolumn ogc_fid --stylecolumn style --colorscolumn colors"
     }
   }
 }
