@@ -56,7 +56,7 @@ namespace tesselate_building_sample_console
                     var points = polygon.ExteriorRing.Points;
 
                     var buildingZ = 0; //put everything on the ground
-                    var res = TesselateBuilding.MakePolyHedral(polygon, buildingZ, height, building.BuildingStyle);
+                    var res = TesselateBuilding.MakeBuilding(polygon, buildingZ, height, building.BuildingStyle);
                     var wkt = res.polyhedral.SerializeString<WktSerializer>();
 
                     var colors = "{"+ string.Join(',', res.colors) +"}";

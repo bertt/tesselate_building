@@ -23,7 +23,7 @@ namespace NUnitTestProject1
         public void MakePolyHedralTest()
         {
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-            var res = TesselateBuilding.MakePolyHedral(footprint, 0, height, bs);
+            var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
             var wkt = res.polyhedral.SerializeString<WktSerializer>();
             Assert.IsTrue(wkt!=null);
             
@@ -37,7 +37,7 @@ namespace NUnitTestProject1
             var height = 9.92000000000;
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
 
-            var res = TesselateBuilding.MakePolyHedral(footprint, 0, height, bs);
+            var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
             Assert.IsTrue(res.polyhedral.Geometries.Count == 20);
             Assert.IsTrue(res.colors.Count == 20);
         }
@@ -58,8 +58,7 @@ namespace NUnitTestProject1
             var res = TesselateBuilding.MakeBuilding(footprint, 0, buildingHeight, bs);
 
             // assert
-            var footprintTriangles = TesselateBuilding.Tesselate(footprint, height).Count;
-            Assert.IsTrue(res.polygons.Count == footprintTriangles * 2 + (footprint.ExteriorRing.Points.Count - 1) * 2 * storeys.Count);
+            Assert.IsTrue(res.polyhedral.Geometries.Count == 46);
         }
 
         [Test]
@@ -67,22 +66,15 @@ namespace NUnitTestProject1
         {
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
             var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
-            var footprintTriangles = TesselateBuilding.Tesselate(footprint, height).Count;
-            Assert.IsTrue(res.polygons.Count == footprintTriangles * 2 + (footprint.ExteriorRing.Points.Count - 1) * 2);
+            Assert.IsTrue(res.polyhedral.Geometries.Count == 30);
         }
 
-        [Test]
-        public void TriangulatePolygonTest()
-        {
-            var polygons = TesselateBuilding.Tesselate(footprint, height);
-            Assert.IsTrue(polygons.Count==7);
-        }
 
         [Test]
         public void MakeWallsTest()
         {
             var walls = TesselateBuilding.MakeWalls(footprint, 0, height);
-            Assert.IsTrue(walls.Count == (footprint.ExteriorRing.Points.Count-1)*2);
+            Assert.IsTrue(walls.Count == (footprint.ExteriorRing.Points.Count-1));
         }
     }
 }
