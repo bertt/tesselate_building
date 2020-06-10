@@ -103,3 +103,12 @@ Build sample application in Docker:
 ```
 $ docker build -t bertt/tesselate_building .
 ```
+
+## Dependencies
+
+- CommandLineParser https://github.com/commandlineparser/commandline
+- Dapper https://github.com/StackExchange/Dapper
+- Npgsql https://github.com/npgsql/npgsql
+- Wkx https://github.com/cschwarz/wkx-sharp
+- Triangulator https://github.com/bertt/triangulator
+- 
