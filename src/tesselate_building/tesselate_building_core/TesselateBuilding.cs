@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Triangulate;
 using Wkx;
 
 namespace tesselate_building_core
@@ -33,11 +34,12 @@ namespace tesselate_building_core
             var stream = new MemoryStream();
             polyhedral.Serialize<WkbSerializer>(stream);
             var wkb = stream.ToArray();
-            var triangulatedWkb = Triangulator.Triangulator.Triangulate(wkb);
+            var triangulatedWkb = Triangulator.Triangulate(wkb);
             var polyhedralNew = (PolyhedralSurface)Geometry.Deserialize<WkbSerializer>(triangulatedWkb);
 
-            for (var i = 0; i < polyhedralNew.Geometries.Count; i++)
+            foreach (var polygon in polyhedralNew.Geometries)
             {
+                var normal = polygon.GetNormal();
                 // todo: fix colors
                 colors.Add("#0000ff");
             }

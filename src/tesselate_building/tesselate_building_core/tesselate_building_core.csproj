@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="bertt.triangulator" Version="1.0.2" />
+    <PackageReference Include="bertt.triangulator" Version="1.0.3" />
     <PackageReference Include="System.Text.Json" Version="4.7.0" />
     <PackageReference Include="Wkx" Version="0.5.1" />
   </ItemGroup>
