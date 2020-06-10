@@ -1,6 +1,6 @@
 # tesselate_building
 
-Console tool for creating a LOD1.2 triangulated polyhedralsurface from (building) footprint and height value. Colors per triangle are written to the 'colors' column. Buildings can have multiple storeys.
+Console tool for creating triangulated polyhedralsurface from (building) footprint and height value. Colors per triangle are written to the 'colors' column. Buildings can have multiple storeys.
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm). This tool is used in the pg2b3dm 'getting started' sample see https://github.com/Geodan/pg2b3dm/blob/master/getting_started.md
 
@@ -111,4 +111,3 @@ $ docker build -t bertt/tesselate_building .
 - Npgsql https://github.com/npgsql/npgsql
 - Wkx https://github.com/cschwarz/wkx-sharp
 - Triangulator https://github.com/bertt/triangulator
-- 
