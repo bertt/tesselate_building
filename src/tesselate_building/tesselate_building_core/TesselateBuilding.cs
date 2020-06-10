@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Triangulate;
 using Wkx;
@@ -40,8 +41,27 @@ namespace tesselate_building_core
             foreach (var polygon in polyhedralNew.Geometries)
             {
                 var normal = polygon.GetNormal();
-                // todo: fix colors
-                colors.Add("#0000ff");
+
+                if (Math.Abs(normal.X) > Math.Abs(normal.Y) && Math.Abs(normal.X) > Math.Abs(normal.Z) ||
+                        (Math.Abs(normal.Y) > Math.Abs(normal.Z)))
+                {
+                    colors.Add(buildingStyle.WallsColor);
+                    //  (yz) projection
+                }
+                else
+                {
+                    // (xy) projextion
+                    if (polygon.ExteriorRing.Points[0].Z == fromZ)
+                    {
+                        // floor
+                        colors.Add(buildingStyle.FloorColor);
+                    }
+                    else
+                    {
+                        // roof
+                        colors.Add(buildingStyle.RoofColor);
+                    }
+                }
             }
             return (polyhedralNew, colors);
         }
