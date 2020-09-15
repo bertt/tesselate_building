@@ -64,7 +64,6 @@ Style content with storeys:
 
 ```
 {
-  "walls": "#00ff00",
   "roof": " #ff0000",
   "floor": "#D3D3D3",
   "storeys": [
@@ -86,6 +85,8 @@ Style content with storeys:
   ]
 }
 ```
+
+If both element 'walls' and 'storeys' are defined the 'walls' prperty will be used.
 
 ## Docker 
 
