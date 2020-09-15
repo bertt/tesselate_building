@@ -86,7 +86,7 @@ Style content with storeys:
 }
 ```
 
-If both element 'walls' and 'storeys' are defined the 'walls' prperty will be used.
+If both element 'walls' and 'storeys' are defined the 'walls' property will be used.
 
 ## Docker 
 
