@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using Dapper;
+using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Diagnostics;
@@ -59,9 +60,16 @@ namespace tesselate_building_sample_console
                     var res = TesselateBuilding.MakeBuilding(polygon, buildingZ, height, building.BuildingStyle);
                     var wkt = res.polyhedral.SerializeString<WktSerializer>();
 
-                    var colors = "{"+ string.Join(',', res.colors) +"}";
+                    var shaders = new ShaderColors();
+                    shaders.PbrMetallicRoughnessColors = new PbrMetallicRoughnessColors() { BaseColors = res.colors };
+                    var json = JsonConvert.SerializeObject(shaders,
+                        Formatting.Indented, new JsonSerializerSettings
+                        {
+                            NullValueHandling = NullValueHandling.Ignore
+                        });
+
                     var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Transform(ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 4326)), {outputProjection}) " +
-                    $", {o.ColorsColumn} = '{colors}' where {o.IdColumn}={building.Id}";
+                            $", {o.ShadersColumn} = '{json}' where {o.IdColumn}={building.Id}";
                     conn.Execute(updateSql);
                     var perc = Math.Round((double)i / buildings.AsList().Count * 100, 2);
                     Console.Write($"\rProgress: {perc.ToString("F")}%");

@@ -1,6 +1,6 @@
 # tesselate_building
 
-Console tool for creating triangulated polyhedralsurface from (building) footprint and height value. Colors per triangle are written to the 'colors' column. Buildings can have multiple storeys.
+Console tool for creating triangulated polyhedralsurface from (building) footprint and height value. Shaders per triangle are written to the 'shaders' column. Buildings can have multiple storeys.
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm). This tool is used in the pg2b3dm 'getting started' sample see https://github.com/Geodan/pg2b3dm/blob/master/getting_started.md
 
@@ -39,7 +39,7 @@ If --username and/or --dbname are not specified the current username is used as 
 
   --stylecolumn                 (Default: style) Style column
 
-  --colorscolumn                (Default: colors) Colors column 
+  --shaderscolumn                (Default: shaders) Shaders column 
 
   --help                        Display this help screen.
 
@@ -95,7 +95,7 @@ Image on Docker hub: https://hub.docker.com/repository/docker/bertt/tesselate_bu
 Run app in Docker:
 
 ```
-$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -f mapbox -i geom -o geom_triangle --idcolumn ogc_fid --stylecolumn style --colorscolumn colors
+$ docker run -it bertt/tesselate_building -U postgres -d postgres -t delaware_buildings -f mapbox -i geom -o geom_triangle --idcolumn ogc_fid --stylecolumn style --shaderscolumn shaders
 ```
 
 Build sample application in Docker:

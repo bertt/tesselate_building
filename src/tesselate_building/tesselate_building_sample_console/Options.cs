@@ -36,7 +36,7 @@ namespace tesselate_building_sample_console
 
         [Option("stylecolumn", Required = false, Default = "style", HelpText = "Style column")]
         public string StyleColumn { get; set; }
-        [Option("colorscolumn", Required = false, Default = "colors", HelpText = "colors column")]
-        public string ColorsColumn { get; set; }
+        [Option("shaderscolumn", Required = false, Default = "shaders", HelpText = "shaders column")]
+        public string ShadersColumn { get; set; }
     }
 }
