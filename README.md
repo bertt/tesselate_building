@@ -4,10 +4,26 @@ Console tool for creating triangulated polyhedralsurface from (building) footpri
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm). This tool is used in the pg2b3dm 'getting started' sample see https://github.com/Geodan/pg2b3dm/blob/master/getting_started.md
 
+## Installation
+
+
+Prerequisite: .NET 5.0 SDK is installed https://dotnet.microsoft.com/download/dotnet/5.0
+
+```
+$ dotnet tool install -g tesselate_building
+```
+
+Or update
+
+```
+$ dotnet tool update -g tesselate_building
+```
+
+
 ## Running
 
 ```
-$ tesselate_building -U postgres -h leda -d research -t bro.geotop3d
+$ tesselate_building -U postgres -h localhost -d research -t bro.geotop3d
 ```
 
 ## command line options

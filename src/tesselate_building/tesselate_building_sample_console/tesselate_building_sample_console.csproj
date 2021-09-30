@@ -5,6 +5,18 @@
     <TargetFramework>net5.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>tesselate_building</AssemblyName>
+	<PackAsTool>true</PackAsTool>
+	<Version>0.1</Version>
+	<ToolCommandName>bertt.tesselate_building</ToolCommandName>
+	<Description>Console tool for tesselate a building</Description>
+	<PackageProjectUrl>https://github.com/bertt/tesselate_building</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/bertt/tesselate_building</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<Authors>Bert Temme</Authors>
+	<PackageOutputPath>./nupkg</PackageOutputPath>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageTags>3dtiles mapbox cesium</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
