@@ -6,7 +6,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>tesselate_building</AssemblyName>
 	<PackAsTool>true</PackAsTool>
-	<Version>0.2</Version>
+	<Version>0.1.1</Version>
 	<ToolCommandName>tesselate_building</ToolCommandName>
 	<Description>Console tool for tesselate a building</Description>
 	<PackageProjectUrl>https://github.com/bertt/tesselate_building</PackageProjectUrl>

@@ -127,3 +127,7 @@ $ docker build -t bertt/tesselate_building .
 - Npgsql https://github.com/npgsql/npgsql
 - Wkx https://github.com/cschwarz/wkx-sharp
 - Triangulator https://github.com/bertt/triangulator
+
+## History
+
+2022-01-24: release 0.2 to from .NET 5 to .NET 6
