@@ -2,7 +2,7 @@
   "profiles": {
     "tesselate_building_sample_console": {
       "commandName": "Project",
-      "commandLineArgs": "-h ::1 -U postgres -d postgres -f mapbox -t delaware_buildings -i wkb_geometry -o geom_triangle --idcolumn ogc_fid --stylecolumn style --shaderscolumn shaders"
+      "commandLineArgs": "-h ::1 -U postgres -d postgres -f cesium -t delaware_buildings -i wkb_geometry -o geom_triangle --idcolumn ogc_fid --stylecolumn style --shaderscolumn shaders"
     }
   }
 }
