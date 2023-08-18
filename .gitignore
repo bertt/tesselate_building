@@ -348,3 +348,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/src/tesselate_building/tesselate_building_sample_console/Properties/launchSettings.json
