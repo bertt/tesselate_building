@@ -130,4 +130,6 @@ $ docker build -t bertt/tesselate_building .
 
 ## History
 
+2023-08-18: release 0.2.1, set MetallicRoughness to 0 (gives white buildings in Cesium)
+
 2022-01-24: release 0.2 to from .NET 5 to .NET 6

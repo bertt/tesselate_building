@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using tesselate_building_core;
 using Wkx;
@@ -61,7 +62,13 @@ namespace tesselate_building_sample_console
                     var wkt = res.polyhedral.SerializeString<WktSerializer>();
 
                     var shaders = new ShaderColors();
-                    shaders.PbrMetallicRoughnessColors = new PbrMetallicRoughnessColors() { BaseColors = res.colors };
+
+
+                    var items = res.colors.Count;
+                    // create a list of strings of size items with value 0 string
+                    var metallicRoughnessColors = Enumerable.Repeat("#000000", items).ToList();
+
+                    shaders.PbrMetallicRoughnessColors = new PbrMetallicRoughnessColors() { BaseColors = res.colors, MetallicRoughnessColors = metallicRoughnessColors };
                     var json = JsonConvert.SerializeObject(shaders,
                         Formatting.Indented, new JsonSerializerSettings
                         {
