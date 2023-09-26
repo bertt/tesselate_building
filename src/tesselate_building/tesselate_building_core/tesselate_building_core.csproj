@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="bertt.triangulator" Version="1.2.2" />
+    <PackageReference Include="bertt.triangulator" Version="1.2.3" />
     <PackageReference Include="System.Text.Json" Version="7.0.3" />
     <PackageReference Include="Wkx" Version="0.5.1" />
   </ItemGroup>
