@@ -130,6 +130,8 @@ $ docker build -t bertt/tesselate_building .
 
 ## History
 
+2023-01-04: release 0.3.0, make compatible with pg2b3dm 2.0.0
+
 2023-09-26: release 0.2.2, fix normals
 
 2023-08-18: release 0.2.1, set MetallicRoughness to 0 (gives white buildings in Cesium)

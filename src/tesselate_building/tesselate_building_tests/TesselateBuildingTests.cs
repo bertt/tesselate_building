@@ -25,7 +25,7 @@ namespace NUnitTestProject1
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
             var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
             var wkt = res.polyhedral.SerializeString<WktSerializer>();
-            Assert.IsTrue(wkt!=null);
+            Assert.That(wkt!=null);
             
         }
 
@@ -38,8 +38,8 @@ namespace NUnitTestProject1
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
 
             var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
-            Assert.IsTrue(res.polyhedral.Geometries.Count == 20);
-            Assert.IsTrue(res.colors.Count == 20);
+            Assert.That(res.polyhedral.Geometries.Count == 20);
+            Assert.That(res.colors.Count == 20);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace NUnitTestProject1
             var res = TesselateBuilding.MakeBuilding(footprint, 0, buildingHeight, bs);
 
             // assert
-            Assert.IsTrue(res.polyhedral.Geometries.Count == 46);
+            Assert.That(res.polyhedral.Geometries.Count == 46);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace NUnitTestProject1
         {
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
             var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
-            Assert.IsTrue(res.polyhedral.Geometries.Count == 30);
+            Assert.That(res.polyhedral.Geometries.Count == 30);
         }
 
 
@@ -74,7 +74,7 @@ namespace NUnitTestProject1
         public void MakeWallsTest()
         {
             var walls = TesselateBuilding.MakeWalls(footprint, 0, height);
-            Assert.IsTrue(walls.Count == (footprint.ExteriorRing.Points.Count-1));
+            Assert.That(walls.Count == (footprint.ExteriorRing.Points.Count-1));
         }
     }
 }

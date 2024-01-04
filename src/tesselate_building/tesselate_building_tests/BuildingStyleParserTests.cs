@@ -17,8 +17,8 @@ namespace tesselate_building_tests
             var buildingStyle = building.BuildingStyle;
 
             // assert
-            Assert.IsTrue(buildingStyle.WallsColor == "#00ff00");
-            Assert.IsTrue(buildingStyle.Storeys == null);
+            Assert.That(buildingStyle.WallsColor == "#00ff00");
+            Assert.That(buildingStyle.Storeys == null);
 
         }
 
@@ -34,11 +34,11 @@ namespace tesselate_building_tests
             var buildingStyle = building.BuildingStyle;
 
             // assert
-            Assert.IsTrue(buildingStyle.WallsColor == "#00ff00");
-            Assert.IsTrue(buildingStyle.Storeys.Count==3);
-            Assert.IsTrue(buildingStyle.Storeys[0].From== 0);
-            Assert.IsTrue(buildingStyle.Storeys[0].To == 0.5);
-            Assert.IsTrue(buildingStyle.Storeys[0].Color == "#D3D3D3");
+            Assert.That(buildingStyle.WallsColor == "#00ff00");
+            Assert.That(buildingStyle.Storeys.Count==3);
+            Assert.That(buildingStyle.Storeys[0].From== 0);
+            Assert.That(buildingStyle.Storeys[0].To == 0.5);
+            Assert.That(buildingStyle.Storeys[0].Color == "#D3D3D3");
         }
     }
 }

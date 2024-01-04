@@ -26,8 +26,6 @@ namespace tesselate_building_sample_console
                 o.User = string.IsNullOrEmpty(o.User) ? Environment.UserName : o.User;
                 o.Database = string.IsNullOrEmpty(o.Database) ? Environment.UserName : o.Database;
 
-                var outputProjection = (o.Format == "mapbox" ? 3857 : 4978);
-
                 var connectionString = $"Host={o.Host};Username={o.User};Database={o.Database};Port={o.Port}";
 
                 var istrusted = TrustedConnectionChecker.HasTrustedConnection(connectionString);
@@ -43,6 +41,10 @@ namespace tesselate_building_sample_console
                 SqlMapper.AddTypeHandler(new GeometryTypeHandler());
                 conn.Open();
 
+                Console.WriteLine(Console.Out.NewLine + "Connected to database.");
+                Console.WriteLine();
+                // write tablename to console
+                Console.WriteLine($"Table: {o.Table}");
 
                 var select = $"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height, style, {o.IdColumn} as id";
                 var sql = $"{select} from {o.Table}";
@@ -75,7 +77,7 @@ namespace tesselate_building_sample_console
                             NullValueHandling = NullValueHandling.Ignore
                         });
 
-                    var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Transform(ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 4326)), {outputProjection}) " +
+                    var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 4326)) " +
                             $", {o.ShadersColumn} = '{json}' where {o.IdColumn}={building.Id}";
                     conn.Execute(updateSql);
                     var perc = Math.Round((double)i / buildings.AsList().Count * 100, 2);
