@@ -19,7 +19,7 @@ namespace tesselate_building_core
             polyhedral.Geometries.Add(GetPolygonZ(footprint, fromZ + height));
             if (buildingStyle.Storeys == null)
             {
-                var walls = MakeWalls(footprint, fromZ, height - fromZ);
+                var walls = MakeWalls(footprint, fromZ, height);
                 polyhedral.Geometries.AddRange(walls);
             }
             else
@@ -27,7 +27,7 @@ namespace tesselate_building_core
                 {
                     foreach (var storey in buildingStyle.Storeys)
                     {
-                        var walls = MakeWalls(footprint, fromZ + storey.From, storey.To - storey.From);
+                        var walls = MakeWalls(footprint, fromZ, storey.To - storey.From);
                         polyhedral.Geometries.AddRange(walls);
                     }
                 }

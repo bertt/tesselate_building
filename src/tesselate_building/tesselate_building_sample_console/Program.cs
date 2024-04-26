@@ -46,7 +46,7 @@ namespace tesselate_building_sample_console
                 // write tablename to console
                 Console.WriteLine($"Table: {o.Table}");
 
-                var select = $"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height, style, {o.IdColumn} as id";
+                var select = $"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height, {o.ElevationColumn} as elevation, style, {o.IdColumn} as id";
                 var sql = $"{select} from {o.Table}";
 
                 var buildings = conn.Query<Building>(sql);
@@ -59,7 +59,7 @@ namespace tesselate_building_sample_console
                     var height = building.Height;
                     var points = polygon.ExteriorRing.Points;
 
-                    var buildingZ = 0; //put everything on the ground
+                    var buildingZ = building.Elevation;
                     var res = TesselateBuilding.MakeBuilding(polygon, buildingZ, height, building.BuildingStyle);
                     var wkt = res.polyhedral.SerializeString<WktSerializer>();
 
