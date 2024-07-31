@@ -7,7 +7,7 @@ This tool is designed to create the correct input information for creating 3D ti
 ## Installation
 
 
-Prerequisite: .NET 6.0 SDK is installed https://dotnet.microsoft.com/download/dotnet/6.0
+Prerequisite: .NET 8.0 SDK is installed https://dotnet.microsoft.com/download/dotnet/6.0
 
 ```
 $ dotnet tool install -g tesselate_building

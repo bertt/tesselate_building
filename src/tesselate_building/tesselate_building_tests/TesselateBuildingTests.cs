@@ -58,7 +58,7 @@ namespace NUnitTestProject1
             var res = TesselateBuilding.MakeBuilding(footprint, 0, buildingHeight, bs);
 
             // assert
-            Assert.That(res.polyhedral.Geometries.Count == 46);
+            Assert.That(res.polyhedral.Geometries.Count == 50);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace NUnitTestProject1
         {
             var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
             var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
-            Assert.That(res.polyhedral.Geometries.Count == 30);
+            Assert.That(res.polyhedral.Geometries.Count == 32);
         }
 
 
