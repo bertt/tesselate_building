@@ -1,95 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Triangulate;
+﻿using System.Collections.Generic;
 using Wkx;
 
 namespace tesselate_building_core
 {
     public static class TesselateBuilding
     {
-        public static (PolyhedralSurface polyhedral, List<string> colors) MakeBuilding(Polygon footprint, double fromZ, double height, BuildingStyle buildingStyle)
+        public static (Polygon floor, Polygon roof, PolyhedralSurface walls) MakeBuilding(Polygon footprint, double fromZ, double height)
         {
-            var colors = new List<string>();
-            var polyhedral = new PolyhedralSurface();
-            polyhedral.Dimension = Dimension.Xyz;
+            var floor = GetPolygonZ(footprint, fromZ);
+            var roof = GetPolygonZ(footprint, fromZ + height);
+            var wallPolygons = MakeWalls(footprint, fromZ, height - fromZ);
 
-            polyhedral.Geometries.Add(GetPolygonZ(footprint, fromZ));
-            polyhedral.Geometries.Add(GetPolygonZ(footprint, fromZ + height));
-            if (buildingStyle.Storeys == null)
-            {
-                var walls = MakeWalls(footprint, fromZ, height - fromZ);
-                polyhedral.Geometries.AddRange(walls);
-            }
-            else
-            {
-                {
-                    foreach (var storey in buildingStyle.Storeys)
-                    {
-                        var walls = MakeWalls(footprint, fromZ + storey.From, storey.To - storey.From);
-                        polyhedral.Geometries.AddRange(walls);
-                    }
-                }
-            }
+            var walls = new PolyhedralSurface();
+            walls.Dimension = Dimension.Xyz;
+            walls.Geometries.AddRange(wallPolygons);
 
-            var stream = new MemoryStream();
-            polyhedral.Serialize<WkbSerializer>(stream);
-            var wkb = stream.ToArray();
-            var triangulatedWkb = Triangulator.Triangulate(wkb);
-            var polyhedralNew = (PolyhedralSurface)Geometry.Deserialize<WkbSerializer>(triangulatedWkb);
-
-            foreach (var polygon in polyhedralNew.Geometries)
-            {
-                var normal = polygon.GetNormal();
-
-                if (Math.Abs(normal.X) > Math.Abs(normal.Y) && Math.Abs(normal.X) > Math.Abs(normal.Z) ||
-                        (Math.Abs(normal.Y) > Math.Abs(normal.Z)))
-                {
-                    //  (yz) projection
-                    if (buildingStyle.WallsColor == null)
-                    {
-                        // use storeys
-                        var storeyColor = GetStoreyColor(polygon, buildingStyle.Storeys);
-                        colors.Add(storeyColor);
-
-                    }
-                    else
-                    {
-                        colors.Add(buildingStyle.WallsColor);
-                    }
-                }
-                else
-                {
-                    // (xy) projextion
-                    if (polygon.ExteriorRing.Points[0].Z == fromZ)
-                    {
-                        // floor
-                        colors.Add(buildingStyle.FloorColor);
-                    }
-                    else
-                    {
-                        // roof
-                        colors.Add(buildingStyle.RoofColor);
-                    }
-                }
-            }
-            return (polyhedralNew, colors);
-        }
-
-        private static string GetStoreyColor(Polygon polygon, List<Storey> storeys)
-        {
-            var minz = Double.MaxValue;
-            var maxz = Double.MinValue;
-
-            foreach (var p in polygon.ExteriorRing.Points)
-            {
-                if (p.Z > maxz) { maxz = (double)p.Z; };
-                if (p.Z < minz) { minz = (double)p.Z; };
-            }
-
-            var storey = storeys.Where(storey => storey.From == minz && storey.To == maxz).FirstOrDefault();
-            return storey.Color;
+            return (floor, roof, walls);
         }
 
         private static Polygon GetPolygonZ(Polygon polygon, double z)

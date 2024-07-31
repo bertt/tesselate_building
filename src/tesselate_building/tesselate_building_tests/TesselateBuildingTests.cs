@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using System.Collections.Generic;
 using tesselate_building_core;
 using Wkx;
 
@@ -20,55 +19,12 @@ namespace NUnitTestProject1
         }
 
         [Test]
-        public void MakePolyHedralTest()
+        public void MakeBuildingTest()
         {
-            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-            var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
-            var wkt = res.polyhedral.SerializeString<WktSerializer>();
-            Assert.That(wkt!=null);
+            var res = TesselateBuilding.MakeBuilding(footprint, 0, height);
+            Assert.That(res.floor !=null);
             
         }
-
-        [Test]
-        public void TestId12()
-        {
-            var wktFootprint = "POLYGON((-75.554412769 39.1634003080001, -75.554480102 39.163362636, -75.554508552 39.1633934610001, -75.554552455 39.163368898, -75.554609356 39.1634305470001, -75.554505101 39.163488876, -75.554412769 39.1634003080001))";
-            footprint = (Polygon)Geometry.Deserialize<WktSerializer>(wktFootprint);
-            var height = 9.92000000000;
-            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-
-            var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
-            Assert.That(res.polyhedral.Geometries.Count == 20);
-            Assert.That(res.colors.Count == 20);
-        }
-
-        [Test]
-        public void MakeBuildingWithStoreysTest()
-        {
-            // arrange
-            var buildingHeight = 10;
-            var storeys = new List<Storey>();
-            storeys.Add(new Storey() { From = 0, To = 5, Color = "#ff0000" });
-            storeys.Add(new Storey() { From = 5, To = 10, Color = "#D3D3D3" });
-
-            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-            bs.Storeys = storeys;
-            
-            // act
-            var res = TesselateBuilding.MakeBuilding(footprint, 0, buildingHeight, bs);
-
-            // assert
-            Assert.That(res.polyhedral.Geometries.Count == 50);
-        }
-
-        [Test]
-        public void TriangulateBuildingTest()
-        {
-            var bs = new BuildingStyle() { FloorColor = "#D3D3D3", RoofColor = "#ff0000", WallsColor = "#00ff00" };
-            var res = TesselateBuilding.MakeBuilding(footprint, 0, height, bs);
-            Assert.That(res.polyhedral.Geometries.Count == 32);
-        }
-
 
         [Test]
         public void MakeWallsTest()

@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace tesselate_building_sample_console
 {
-    public class ShaderColors
+    public class ShaderColor
     {
-        public List<string> EmissiveColors { get; set; }
+        public string EmissiveColor { get; set; }
         [JsonProperty(PropertyName = "PbrSpecularGlossiness")]
         public PbrSpecularGlossinessColors PbrSpecularGlossinessColors { get; set; }
 
@@ -15,16 +14,16 @@ namespace tesselate_building_sample_console
 
     public class PbrSpecularGlossinessColors
     {
-        public List<string> DiffuseColors { get; set; }
+        public string DiffuseColors { get; set; }
         [JsonProperty(PropertyName = "SpecularGlossiness")]
-        public List<string> SpecularGlossinessColors { get; set; }
+        public string SpecularGlossinessColor { get; set; }
     }
 
     public class PbrMetallicRoughnessColors
     {
         [JsonProperty(PropertyName = "MetallicRoughness")]
-        public List<string> MetallicRoughnessColors { get; set; }
-        public List<string> BaseColors { get; set; }
+        public string MetallicRoughnessColor { get; set; }
+        public string BaseColor { get; set; }
     }
 
 }

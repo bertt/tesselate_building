@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace tesselate_building_core
 {
@@ -11,8 +10,5 @@ namespace tesselate_building_core
         public string RoofColor { get; set; }
         [JsonPropertyName("floor")]
         public string FloorColor { get; set; }
-
-        [JsonPropertyName("storeys")]
-        public List<Storey> Storeys { get; set; }
     }
 }

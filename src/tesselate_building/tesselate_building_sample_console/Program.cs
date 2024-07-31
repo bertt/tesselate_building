@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using tesselate_building_core;
 using Wkx;
@@ -16,6 +15,12 @@ namespace tesselate_building_sample_console
         static string password = string.Empty;
         static void Main(string[] args)
         {
+            var colorRoof = "#FF0000";
+            var colorFloor = "#008000";
+            var colorWalls = "#EEC900";
+            var metallicRoughness = "#000000";
+
+
             var version = Assembly.GetEntryAssembly().GetName().Version;
             Console.WriteLine($"Tool: Tesselate buildings {version}");
             var stopWatch = new Stopwatch();
@@ -46,9 +51,24 @@ namespace tesselate_building_sample_console
                 // write tablename to console
                 Console.WriteLine($"Table: {o.Table}");
 
-                var select = $"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height, style, {o.IdColumn} as id";
-                var sql = $"{select} from {o.Table}";
+                // create a new output table, with name of the input table + "_3d"
+                var outputTable = $"{o.Table}_3d";
+                // drop table if exists
+                var dropTable = $"drop table if exists {outputTable}";
+                conn.Execute(dropTable);
+                var createTable = $"create table {outputTable} as select * from {o.Table} where 1=0";
+                conn.Execute(createTable);
+                var addShadersColumn = $"alter table {outputTable} add column {o.ShadersColumn} json";
+                conn.Execute(addShadersColumn);
+                var addTypeColumn = $"alter table {outputTable} add column type text";
+                conn.Execute(addTypeColumn);
 
+                var addGeometryColumn = $"alter table {outputTable} add column {o.OutputGeometryColumn} geometry";
+                conn.Execute(addGeometryColumn);
+
+
+                var select = $"select ST_AsBinary({o.InputGeometryColumn}) as geometry, {o.HeightColumn} as height";
+                var sql = $"{select} from {o.Table}";
                 var buildings = conn.Query<Building>(sql);
 
                 var i = 1;
@@ -59,27 +79,35 @@ namespace tesselate_building_sample_console
                     var height = building.Height;
                     var points = polygon.ExteriorRing.Points;
 
-                    var buildingZ = 0; //put everything on the ground
-                    var res = TesselateBuilding.MakeBuilding(polygon, buildingZ, height, building.BuildingStyle);
-                    var wkt = res.polyhedral.SerializeString<WktSerializer>();
+                    var buildingZ = 0.0; //put everything on the ground
+                    var buildingParts = TesselateBuilding.MakeBuilding(polygon, buildingZ, height);
 
-                    var shaders = new ShaderColors();
+                    // write floor shader to the database
+                    string jsonFloor = GetShader(colorFloor, metallicRoughness);
+
+                    // insert record into output table
+                    var insertFloor = $"insert into {outputTable} ({o.OutputGeometryColumn}, {o.ShadersColumn}, type) " +
+                        $"values (ST_Force3D(St_SetSrid(ST_GeomFromText('{wktFootprint}'), 4326)), '{jsonFloor}', 'floor')";
+
+                    conn.Execute(insertFloor);
+
+                    string jsonRoof = GetShader(colorRoof, metallicRoughness);
+                    var wktRoof = buildingParts.roof.SerializeString<WktSerializer>();
+                    var insertRoof = $"insert into {outputTable} ({o.OutputGeometryColumn}, {o.ShadersColumn}, type) " +
+                        $"values (ST_Force3D(St_SetSrid(ST_GeomFromText('{wktRoof}'), 4326)), '{jsonRoof}', 'roof')";
+
+                    conn.Execute(insertRoof);
 
 
-                    var items = res.colors.Count;
-                    // create a list of strings of size items with value 0 string
-                    var metallicRoughnessColors = Enumerable.Repeat("#000000", items).ToList();
+                    string jsonWalls = GetShader(colorWalls, metallicRoughness);
+                    var wktWall = buildingParts.walls.SerializeString<WktSerializer>();
+                    var insertWalls = $"insert into {outputTable} ({o.OutputGeometryColumn}, {o.ShadersColumn}, type) " +
+                        $"values (ST_Force3D(St_SetSrid(ST_GeomFromText('{wktWall}'), 4326)), '{jsonWalls}', 'walls')";
 
-                    shaders.PbrMetallicRoughnessColors = new PbrMetallicRoughnessColors() { BaseColors = res.colors, MetallicRoughnessColors = metallicRoughnessColors };
-                    var json = JsonConvert.SerializeObject(shaders,
-                        Formatting.Indented, new JsonSerializerSettings
-                        {
-                            NullValueHandling = NullValueHandling.Ignore
-                        });
+                    conn.Execute(insertWalls);
 
-                    var updateSql = $"update {o.Table} set {o.OutputGeometryColumn} = ST_Force3D(St_SetSrid(ST_GeomFromText('{wkt}'), 4326)) " +
-                            $", {o.ShadersColumn} = '{json}' where {o.IdColumn}={building.Id}";
-                    conn.Execute(updateSql);
+
+
                     var perc = Math.Round((double)i / buildings.AsList().Count * 100, 2);
                     Console.Write($"\rProgress: {perc.ToString("F")}%");
                     i++;
@@ -92,6 +120,19 @@ namespace tesselate_building_sample_console
                 Console.WriteLine($"Elapsed: {stopWatch.ElapsedMilliseconds / 1000} seconds");
                 Console.WriteLine("Program finished.");
             });
+        }
+
+        private static string GetShader(string colorFloor, string metallicRoughness)
+        {
+            var shader = new ShaderColor();
+            shader.PbrMetallicRoughnessColors = new PbrMetallicRoughnessColors() { BaseColor = colorFloor, MetallicRoughnessColor = metallicRoughness };
+
+            var json = JsonConvert.SerializeObject(shader,
+                Formatting.None, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+            return json;
         }
     }
 }
