@@ -65,7 +65,6 @@ namespace tesselate_building_sample_console
 
                     var shaders = new ShaderColors();
 
-
                     var items = res.colors.Count;
                     // create a list of strings of size items with value 0 string
                     var metallicRoughnessColors = Enumerable.Repeat("#000000", items).ToList();
