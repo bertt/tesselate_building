@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Triangulate;
 using Wkx;
 
 namespace tesselate_building_core
@@ -16,11 +14,17 @@ namespace tesselate_building_core
             polyhedral.Dimension = Dimension.Xyz;
 
             polyhedral.Geometries.Add(GetPolygonZ(footprint, fromZ));
+            colors.Add(buildingStyle.FloorColor);
             polyhedral.Geometries.Add(GetPolygonZ(footprint, fromZ + height));
+            colors.Add(buildingStyle.RoofColor);
             if (buildingStyle.Storeys == null)
             {
                 var walls = MakeWalls(footprint, fromZ, height);
                 polyhedral.Geometries.AddRange(walls);
+                foreach(var wall in walls)
+                {
+                    colors.Add(buildingStyle.WallsColor);
+                }
             }
             else
             {
@@ -28,55 +32,19 @@ namespace tesselate_building_core
                     foreach (var storey in buildingStyle.Storeys)
                     {
                         var walls = MakeWalls(footprint, fromZ, storey.To - storey.From);
+                        foreach (var wall in walls)
+                        {
+                            colors.Add(storey.Color);
+                        }
                         polyhedral.Geometries.AddRange(walls);
                     }
                 }
             }
 
-            var stream = new MemoryStream();
-            polyhedral.Serialize<WkbSerializer>(stream);
-            var wkb = stream.ToArray();
-            var triangulatedWkb = Triangulator.Triangulate(wkb);
-            var polyhedralNew = (PolyhedralSurface)Geometry.Deserialize<WkbSerializer>(triangulatedWkb);
+            return (polyhedral, colors);
 
-            foreach (var polygon in polyhedralNew.Geometries)
-            {
-                var normal = polygon.GetNormal();
 
-                if (Math.Abs(normal.X) > Math.Abs(normal.Y) && Math.Abs(normal.X) > Math.Abs(normal.Z) ||
-                        (Math.Abs(normal.Y) > Math.Abs(normal.Z)))
-                {
-                    //  (yz) projection
-                    if (buildingStyle.WallsColor == null)
-                    {
-                        // use storeys
-                        var storeyColor = GetStoreyColor(polygon, buildingStyle.Storeys);
-                        colors.Add(storeyColor);
-
-                    }
-                    else
-                    {
-                        colors.Add(buildingStyle.WallsColor);
-                    }
-                }
-                else
-                {
-                    // (xy) projextion
-                    if (polygon.ExteriorRing.Points[0].Z == fromZ)
-                    {
-                        // floor
-                        colors.Add(buildingStyle.FloorColor);
-                    }
-                    else
-                    {
-                        // roof
-                        colors.Add(buildingStyle.RoofColor);
-                    }
-                }
-            }
-            return (polyhedralNew, colors);
         }
-
         private static string GetStoreyColor(Polygon polygon, List<Storey> storeys)
         {
             var minz = Double.MaxValue;

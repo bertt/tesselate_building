@@ -7,7 +7,7 @@ This tool is designed to create the correct input information for creating 3D ti
 ## Installation
 
 
-Prerequisite: .NET 6.0 SDK is installed https://dotnet.microsoft.com/download/dotnet/6.0
+Prerequisite: .NET 8.0 SDK is installed https://dotnet.microsoft.com/download/dotnet/6.0
 
 ```
 $ dotnet tool install -g tesselate_building
@@ -129,6 +129,8 @@ $ docker build -t bertt/tesselate_building .
 - Triangulator https://github.com/bertt/triangulator
 
 ## History
+
+2024-08-07: release 0.4.0, make compatible with pg2b3dm 2.13.0
 
 2023-01-04: release 0.3.0, make compatible with pg2b3dm 2.0.0
 

@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="bertt.triangulator" Version="1.2.3" />
-    <PackageReference Include="System.Text.Json" Version="7.0.3" />
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
     <PackageReference Include="Wkx" Version="0.5.1" />
   </ItemGroup>
 
