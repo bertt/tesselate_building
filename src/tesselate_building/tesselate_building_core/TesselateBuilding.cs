@@ -19,7 +19,7 @@ namespace tesselate_building_core
             colors.Add(buildingStyle.RoofColor);
             if (buildingStyle.Storeys == null)
             {
-                var walls = MakeWalls(footprint, fromZ, height - fromZ);
+                var walls = MakeWalls(footprint, fromZ, height);
                 polyhedral.Geometries.AddRange(walls);
                 foreach(var wall in walls)
                 {
@@ -31,7 +31,7 @@ namespace tesselate_building_core
                 {
                     foreach (var storey in buildingStyle.Storeys)
                     {
-                        var walls = MakeWalls(footprint, fromZ + storey.From, storey.To - storey.From);
+                        var walls = MakeWalls(footprint, fromZ, storey.To - storey.From);
                         foreach (var wall in walls)
                         {
                             colors.Add(storey.Color);

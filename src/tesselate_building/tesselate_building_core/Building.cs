@@ -7,10 +7,11 @@ namespace tesselate_building_core
     {
         public Geometry Geometry { get; set; }
         public double Height { get; set; }
+        public double Elevation { get; set; }
 
         public int Id { get; set; }
 
-        public string Style { get; set; } 
+        public string Style { get; set; }
 
         public BuildingStyle BuildingStyle
         {
