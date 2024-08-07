@@ -32,6 +32,10 @@ namespace tesselate_building_core
                     foreach (var storey in buildingStyle.Storeys)
                     {
                         var walls = MakeWalls(footprint, fromZ + storey.From, storey.To - storey.From);
+                        foreach (var wall in walls)
+                        {
+                            colors.Add(storey.Color);
+                        }
                         polyhedral.Geometries.AddRange(walls);
                     }
                 }
