@@ -1,13 +1,13 @@
 # tesselate_building
 
-Console tool for creating triangulated polyhedralsurface from (building) footprint and height value. Shaders per triangle are written to the 'shaders' column. Buildings can have multiple storeys.
+Console tool for creating polyhedralsurface geometry from (building) footprint, elevation and height value. Shaders for the buildings are written to the 'shaders' column. Buildings can have multiple storeys.
 
 This tool is designed to create the correct input information for creating 3D tiles with pg2b3dm (https://github.com/Geodan/pg2b3dm). This tool is used in the pg2b3dm 'getting started' sample see https://github.com/Geodan/pg2b3dm/blob/master/getting_started.md
 
 ## Installation
 
 
-Prerequisite: .NET 8.0 SDK is installed https://dotnet.microsoft.com/download/dotnet/6.0
+Prerequisite: .NET 8.0 SDK is installed https://dotnet.microsoft.com/download/dotnet/8.0
 
 ```
 $ dotnet tool install -g tesselate_building
@@ -67,7 +67,7 @@ If --username and/or --dbname are not specified the current username is used as 
 ## Building elevation
 
 To support terrains there is an option --elevationcolumn to specify an elevation column. 
-The values in the elevation column are added to the building height values. 
+The values in the elevation column are added to the building z-values. 
 
 
 ## Building Styling
@@ -134,7 +134,6 @@ $ docker build -t bertt/tesselate_building .
 - Dapper https://github.com/StackExchange/Dapper
 - Npgsql https://github.com/npgsql/npgsql
 - Wkx https://github.com/cschwarz/wkx-sharp
-- Triangulator https://github.com/bertt/triangulator
 
 ## History
 
