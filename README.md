@@ -51,6 +51,8 @@ If --username and/or --dbname are not specified the current username is used as 
 
   --heightcolumn                (Default: height) height column
 
+  --elevationcolumn             (Default: elevation) Elevation column
+
   --idcolumn                    (Default: id) Id column
 
   --stylecolumn                 (Default: style) Style column
@@ -61,6 +63,12 @@ If --username and/or --dbname are not specified the current username is used as 
 
   --version                     Display version information.
   ```
+
+## Building elevation
+
+To support terrains there is an option --elevationcolumn to specify an elevation column. 
+The values in the elevation column are added to the building height values. 
+
 
 ## Building Styling
 
@@ -129,6 +137,8 @@ $ docker build -t bertt/tesselate_building .
 - Triangulator https://github.com/bertt/triangulator
 
 ## History
+
+2024-08-07: release 0.5.0, add support for elevation column
 
 2024-08-07: release 0.4.0, make compatible with pg2b3dm 2.13.0
 
